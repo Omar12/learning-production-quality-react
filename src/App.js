@@ -2,28 +2,30 @@ import React, { Component } from "react";
 import logo from "./logo.svg";
 import "./App.css";
 import { TodoForm, TodoList } from "./components/todo";
-import { addTodo, generateId } from "./lib/todoHelpers";
+import { addTodo, generateId, findbyId, toggleTodo, updateTodo, findById } from "./lib/todoHelpers";
 
 class App extends Component {
-  constructor() {
-    super();
-    this.state = {
-      todos: [
-        { id: 1, name: "Create JSX", isComplete: true },
-        { id: 2, name: "Finish Floor", isComplete: false },
-        { id: 3, name: "Paint", isComplete: false }
-      ],
-      currentTodo: ""
-    };
-    this.handleInputChange = this.handleInputChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
+  state = {
+    todos: [
+      { id: 1, name: "Create JSX", isComplete: true },
+      { id: 2, name: "Finish Floor", isComplete: false },
+      { id: 3, name: "Paint", isComplete: true }
+    ],
+    currentTodo: ""
+  };
+
+  handleToggle = (id) => {
+    const todo = findById(id, this.state.todos)
+    const toggled = toggleTodo(todo)
+    const updatedTodos = updateTodo(this.state.todos, toggled)
+    this.setState({todos: updatedTodos})
   }
 
-  handleInputChange(evt) {
+  handleInputChange = evt => {
     this.setState({ currentTodo: evt.target.value });
-  }
+  };
 
-  handleSubmit(evt) {
+  handleSubmit = evt => {
     evt.preventDefault();
     const newId = generateId();
     const newTodo = {
@@ -34,11 +36,23 @@ class App extends Component {
     const updatedTodos = addTodo(this.state.todos, newTodo);
     this.setState({
       todos: updatedTodos,
-      currentTodo: ""
+      currentTodo: "",
+      errorMessage: ""
     });
-  }
+  };
+
+  handleEmptySubmit = evt => {
+    evt.preventDefault();
+    this.setState({
+      errorMessage: "Please supply a todo name."
+    });
+  };
 
   render() {
+    const submitHandler = this.state.currentTodo
+      ? this.handleSubmit
+      : this.handleEmptySubmit;
+
     return (
       <div className="App">
         <header className="App-header">
@@ -46,12 +60,15 @@ class App extends Component {
           <h1 className="App-title">React To-dos</h1>
         </header>
         <div className="Todo-App">
+          {this.state.errorMessage && (
+            <span className="error">{this.state.errorMessage}</span>
+          )}
           <TodoForm
             handleInputChange={this.handleInputChange}
             currentTodo={this.state.currentTodo}
-            handleSubmit={this.handleSubmit}
+            handleSubmit={submitHandler}
           />
-          <TodoList todos={this.state.todos} />
+          <TodoList handleToggle={this.handleToggle} todos={this.state.todos} />
         </div>
       </div>
     );
