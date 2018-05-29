@@ -46,3 +46,20 @@ ul {
 li {
   list-style: none;
 }
+
+li .delete-item {
+  opacity: 0;
+  font-size: 80%; 
+}
+
+li:hover {
+  cursor: pointer;
+}
+
+li:hover .delete-item {
+  opacity: 1;
+}
+
+.delete-item a {
+  text-decoration: none;
+}
