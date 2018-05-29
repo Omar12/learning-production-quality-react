@@ -63,3 +63,11 @@ li:hover .delete-item {
 .delete-item a {
   text-decoration: none;
 }
+
+.footer a {
+  padding: 0 3px;
+}
+
+.footer a.active {
+  font-weight: bold;
+}
