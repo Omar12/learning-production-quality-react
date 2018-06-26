@@ -71,3 +71,11 @@ li:hover .delete-item {
 .footer a.active {
   font-weight: bold;
 }
+
+.error {
+  color: firebrick;
+}
+
+.success {
+  color: forestgreen;
+}

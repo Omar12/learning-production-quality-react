@@ -5,8 +5,8 @@ export const Footer = () => {
   return (
     <div className="footer">
       <Link to="/">All</Link>
-      <Link to="/Active">Active</Link>
-      <Link to="/Complete">Complete</Link>
+      <Link to="/active">Active</Link>
+      <Link to="/complete">Complete</Link>
     </div>
   )
 }
