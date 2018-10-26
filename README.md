@@ -3,11 +3,12 @@ Following the Egghead tutorial: <https://egghead.io/courses/build-your-first-pro
 
 ## Installing and running json-server
 
-**Install:**
+### Install:
 ```sh
 npm i -hg json-server
+```
 
-**Running the server:**
+### Running the server:
 ```sh
 json-server -p 8080 --watch db.json
 ```
